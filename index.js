@@ -1,43 +1,27 @@
 
 
-//callstack without Asynchronous Functions
+// callbacks
 
-const fName = () => console.log("Poorna");
-
-const lName = () => console.log("Sri");
-
-const printName = () => {
-  console.log("My name is[synchronous]: ");
-  fName();
-  lName();
+const fetchUserDetails = (userID, callback) => {
+  console.log("fetching user details");
+  setTimeout(() => {
+    callback("https://image.com/${userID}");
+  }, 500);
 };
 
-printName();
-
-//callstack with Asynchronous Functions
-
-const printNames = () => {
-    console.log("My name is[Asynchronous]: ");
-    setTimeout(fName, 0);
-    lName();
-}
-
-printNames();
-
-// Closures in JavaScript
-function generateGreetings(name) {
-    function spanish() {
-      console.log(`Hola ${name}!`);
-    }
-    function english() {
-      console.log(`Hello ${name}!`);
-    }
-    return {spanish, english};
+const downloadImage = (imageURL, callback) => {
+    console.log("Downloading image");
+    setTimeout(() => {
+        callback("Image data for ${imageURL}");
+    }, 500);
   };
-  
-  const name = 'John';
-  const greetings = generateGreetings(name);
-  console.log(typeof(greetings.spanish));
-  
-  greetings.spanish(); 
-  greetings.english(); 
+
+  const render = (image) => {
+    console.log("render image");
+  }
+
+  fetchUserDetails("poorna", (imageURL) => {
+    downloadImage(imageURL, (ImageData) => {
+        render(ImageData);
+    })
+  })
